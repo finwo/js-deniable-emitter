@@ -68,9 +68,11 @@ function handler( name, ...args ) {
 
 // Make the handler listen for any events
 emitter.on('*', handler);
+// < emitter
 
 // Make the handler listen for foo events
 emitter.on('foo', handler);
+// < emitter
 
 // TODO: better explanation
 ```
@@ -89,6 +91,7 @@ emitter.on('foo', handler);
 emitter.emit('foo', function( err, response ) {
   console.log(response); // > "Resolving value";
 });
+// < undefined
 
 // TODO: better explanation
 ```
@@ -99,7 +102,7 @@ emitter.emit('foo', function( err, response ) {
 
 // Removes handler from the foo event
 emitter.off('foo', handler);
-// < undefined
+// < emitter
 
 // TODO: better explanation
 ```

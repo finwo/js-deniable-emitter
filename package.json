@@ -1,6 +1,6 @@
 {
   "name": "deniable-emitter",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Deniable Event Emitter",
   "main": "index.js",
   "scripts": {

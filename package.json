@@ -1,0 +1,19 @@
+{
+  "name": "deniable-events",
+  "version": "0.0.1",
+  "description": "Deniable eventemitter",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/finwo/js-deniable-events.git"
+  },
+  "author": "Robin Bron <robin@finwo.nl>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/finwo/js-deniable-events/issues"
+  },
+  "homepage": "https://github.com/finwo/js-deniable-events#readme"
+}

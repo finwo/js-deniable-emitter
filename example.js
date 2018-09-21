@@ -1,3 +1,7 @@
+#!/usr/bin/env sh
+':' //; exec "$(command -v nodejs || command -v node)" -r esm "$0" "$@";
+// equivalent of: node -r esm example.js "$@"
+
 // Importing the module
 import { DeniableEmitter } from './index';
 
@@ -62,15 +66,15 @@ mq.on('resolve', function( msg, callback ) {
   console.log('Resolve:',msg);
   return 'Success';
 });
-mq.on('reject', function( msg, callback ) {
+mq.on('precondition', function( msg, callback ) {
   console.log('Precondition:',msg);
   if ( ~msg.reject-- ) throw "Something";
   return 'Success';
 });
 
 // Enqueue an example message
-mq.push({ typ: 'resolve', nbf: new Date().getTime() + (5*1000) });
-mq.push({ typ: 'reject' , nbf: new Date().getTime() + (3*1000), reject: 2 });
+mq.push({ typ: 'resolve'     , nbf: new Date().getTime() + (5*1000)            });
+mq.push({ typ: 'precondition', nbf: new Date().getTime() + (3*1000), reject: 2 });
 
 // Start processor
 setTimeout(function processQueue() {

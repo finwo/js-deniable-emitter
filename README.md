@@ -23,6 +23,8 @@ npm install --save deniable-emitter
 
 ## Usage
 
+This simply initializes a new DeniableEmitter. For a proper example, see [example.js](example.js)
+
 ```javascript
 // Importing the module
 import { DeniableEmitter } from 'deniable-emitter';

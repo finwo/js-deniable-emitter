@@ -4,15 +4,16 @@ Deniable Event Emitter for asynchronous verification
 
 ## Contents
 
-- Installation
-- Usage
-- API
-  - new DeniableEmitter()
-  - de.on()
-  - de.once()
-  - de.emit()
-  - de.off()
-- Contributing guidelines
+- [Installation](#installation)
+- [Usage](#usage)
+- [API](#api)
+  - [new DeniableEmitter()](#constructor)
+  - [emitter.has()](#emitter.has)
+  - [emitter.on()](#emitter.on)
+  - [emitter.once()](#emitter.once)
+  - [emitter.emit()](#emitter.emit)
+  - [emitter.off()](#emitter.off)
+- [Contributing guidelines](#contributing)
 
 ## Installation
 
@@ -23,12 +24,13 @@ npm install --save deniable-emitter
 ## Usage
 
 ```javascript
-
 // Importing the module
 import { DeniableEmitter } from 'deniable-emitter';
 
-// TODO: better example
+// Initialize a new emitter
+const emitter = new DeniableEmitter();
 
+// TODO: better example
 ```
 
 ## API
@@ -45,7 +47,13 @@ const emitter = new DeniableEmitter();
 // TODO: explain inheritance isn't thought of
 ```
 
-### de.on()
+### emitter.has
+
+```javascript
+// TODO
+```
+
+### emitter.on
 
 ```javascript
 function handler( name, ...args ) {
@@ -77,26 +85,26 @@ emitter.on('foo', handler);
 // TODO: better explanation
 ```
 
-### de.once()
+### emitter.once
 
 ```javascript
 // TODO
 ```
 
-### de.emit()
+### emitter.emit
 
 ```javascript
 
 // Always returns undefined & tries callback
 emitter.emit('foo', function( err, response ) {
-  console.log(response); // > "Resolving value";
+  console.log(response); // "Resolving value";
 });
 // < undefined
 
 // TODO: better explanation
 ```
 
-### de.off()
+### emitter.off
 
 ```javascript
 
@@ -107,7 +115,7 @@ emitter.off('foo', handler);
 // TODO: better explanation
 ```
 
-## Contributing guidelines
+## Contributing
 
 ### Bugs
 

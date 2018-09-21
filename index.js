@@ -16,10 +16,30 @@
 })(function () {
   const events = Symbol();
 
-  function EventEmitter() {
-    if (!(this instanceof EventEmitter)) return new EventEmitter();
-    this[events] = {'*':[]};
+  function EventEmitter( subject ) {
+    subject         = subject || this;
+
+    // Allow calling without 'new'
+    let glob = false;
+    glob = glob || ('object' === typeof window) ? window : false;
+    glob = glob || ('object' === typeof global) ? global : false;
+    if ( subject === glob ) return new EventEmitter();
+
+    // Initialize events list
+    subject[events] = {'*':[]};
+
+    // Allow EventEmitter.call( {} )
+    if ( subject.__proto__ !== EventEmitter.prototype ) {
+      subject.__proto__ = Object.assign({}, subject.__proto__, EventEmitter.prototype);
+    }
+
+    // Return our produce
+    return subject;
   }
+
+  EventEmitter.prototype.has = function( name ) {
+    return !!( (this[events][name]||[]).length || this[events]['*'].length );
+  };
 
   EventEmitter.prototype.on = function (name, handler) {
     if ('function' !== typeof handler) return this;
@@ -44,11 +64,15 @@
     // Return undefined when using callback, otherwise you might start a parallel universe
     (async function next (err, data) {
       if ( err ) return callback(err);
-      let handler = list.shift();
+      let handler = list.shift(),
+          response;
       if ( 'function' !== typeof handler ) {
         return list.length ? next(undefined,data) : callback(undefined,data);
       }
-      let response = handler(...args.slice(),next);
+      try {
+        response = handler(...args.slice(),next);
+      } catch(e) { err = e; }
+      if ( err ) return callback(err);
       if ( 'undefined' === response ) return;
       try {
         await response;

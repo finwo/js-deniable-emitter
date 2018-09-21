@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/finwo/js-deniable-events/issues"
   },
-  "homepage": "https://github.com/finwo/js-deniable-events#readme"
+  "homepage": "https://github.com/finwo/js-deniable-events#readme",
+  "devDependencies": {
+    "esm": "^3.0.84"
+  }
 }

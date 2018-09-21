@@ -2,12 +2,15 @@
   const dependencies = [];
 
   if (('function' === typeof define) && define.amd) {
+    // RequireJS/AMD
     define(dependencies, factory);
   } else {
+    // Detect exports ( window || module.exports || false )
     let exports          = false;
     exports              = exports || ('object' === typeof window) ? window : this;
     exports              = exports || ('object' === typeof module) ? module.exports : false;
-    exports.EventEmitter = factory(...dependencies.map(require));
+    if ( !exports ) throw new Error("Could not initialize deniable events");
+    exports.DeniableEmitter = factory(...dependencies.map(require));
   }
 
 })(function () {
@@ -39,23 +42,21 @@
     if ( 'function' === typeof args[args.length-1] ) callback = args.pop();
 
     // Return undefined when using callback, otherwise you might start a parallel universe
-    (async function next (err) {
+    (async function next (err, data) {
       if ( err ) return callback(err);
       let handler = list.shift();
       if ( 'function' !== typeof handler ) {
-        return list.length ? next() : callback();
+        return list.length ? next(undefined,data) : callback(undefined,data);
       }
       let response = handler(...args.slice(),next);
       if ( 'undefined' === response ) return;
       try {
         await response;
-        await next();
+        await next(undefined,response);
       } catch(e) {
         await next(e);
       }
     })();
-
-    return this;
   };
 
   EventEmitter.prototype.once = function( name, handler ) {
@@ -64,6 +65,7 @@
       emitter.off(name,g);
       return handler(...args);
     });
+    return this;
   };
 
   return EventEmitter;
